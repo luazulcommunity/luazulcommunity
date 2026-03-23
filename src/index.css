@@ -1,0 +1,1047 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* Blue Moon Espacial Colors */
+    --lunar-white: 225 100% 95%;
+    --lunar-lavender: 250 100% 92%;
+    --sky-blue: 203 94% 78%;
+    --cosmic-blue: 231 73% 72%;
+    --ocean-blue: 199 98% 61%;
+    --deep-purple: 260 67% 35%;
+    --midnight-blue: 220 77% 32%;
+    --space-black: 222 47% 11%;
+    
+    /* Primary Palette - Deep Blue */
+    --primary: 231 73% 72%;
+    --primary-foreground: 0 0% 100%;
+
+    /* Secondary - Sky Blue */
+    --secondary: 203 94% 78%;
+    --secondary-foreground: 220 77% 32%;
+
+    /* Accent - Light Blue */
+    --accent: 199 98% 61%;
+    --accent-foreground: 220 77% 32%;
+
+    /* Background Hierarchy - Space Theme */
+    --background: 222 47% 11%;
+    --background-secondary: 220 40% 15%;
+    --background-tertiary: 218 35% 20%;
+
+    /* Foreground Hierarchy */
+    --foreground: 225 100% 95%;
+    --muted-foreground: 215 16% 65%;
+
+    /* Card Components - Glass Effect */
+    --card: 220 40% 15% / 0.6;
+    --card-foreground: 225 100% 95%;
+
+    /* Popover */
+    --popover: 222 47% 11% / 0.8;
+    --popover-foreground: 225 100% 95%;
+
+    /* Muted */
+    --muted: 220 30% 20%;
+    --muted-foreground: 215 16% 65%;
+
+    /* Luxury (Moon Blue) */
+    --luxury: 231 73% 72%;
+    --luxury-foreground: 0 0% 100%;
+
+    /* Destructive */
+    --destructive: 0 82% 52%;
+    --destructive-foreground: 0 0% 100%;
+
+    /* Borders and Separators - Subtle Glow */
+    --border: 215 30% 35% / 0.2;
+    --input: 215 30% 35% / 0.3;
+    --ring: 231 73% 72%;
+
+    /* Semantic Colors */
+    --success: 142 76% 36%;
+    --warning: 46 65% 52%;
+    --error: 340 82% 52%;
+
+    --radius: 1.875rem;
+
+    /* Typography */
+    --font-display: 'Playfair Display', serif;
+    --font-body: 'Poppins', 'Inter', sans-serif;
+
+    /* Type Scale */
+    --text-xs: clamp(0.75rem, 0.7vw, 0.875rem);
+    --text-sm: clamp(0.875rem, 0.8vw, 1rem);
+    --text-base: clamp(1rem, 1vw, 1.125rem);
+    --text-lg: clamp(1.125rem, 1.2vw, 1.25rem);
+    --text-xl: clamp(1.25rem, 1.5vw, 1.5rem);
+    --text-2xl: clamp(1.5rem, 2vw, 1.875rem);
+    --text-3xl: clamp(1.875rem, 2.5vw, 2.25rem);
+    --text-4xl: clamp(2.25rem, 3vw, 3rem);
+    --text-5xl: clamp(3rem, 4vw, 4rem);
+
+    /* Sidebar */
+    --sidebar-background: 220 40% 15%;
+    --sidebar-foreground: 225 100% 95%;
+    --sidebar-primary: 231 73% 72%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 220 30% 20%;
+    --sidebar-accent-foreground: 225 100% 95%;
+    --sidebar-border: 215 30% 35% / 0.2;
+    --sidebar-ring: 231 73% 72%;
+  }
+
+  .dark {
+    /* Mantém o mesmo tema espacial no dark mode */
+    --background: 222 47% 11%;
+    --background-secondary: 220 40% 15%;
+    --background-tertiary: 218 35% 20%;
+    --foreground: 225 100% 95%;
+    --muted-foreground: 215 16% 65%;
+    --card: 220 40% 15% / 0.6;
+    --card-foreground: 225 100% 95%;
+    --popover: 222 47% 11% / 0.8;
+    --popover-foreground: 225 100% 95%;
+    --primary: 231 73% 72%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 203 94% 78%;
+    --secondary-foreground: 220 77% 32%;
+    --accent: 199 98% 61%;
+    --accent-foreground: 220 77% 32%;
+    --muted: 220 30% 20%;
+    --muted-foreground: 215 16% 65%;
+    --luxury: 231 73% 72%;
+    --luxury-foreground: 0 0% 100%;
+    --destructive: 0 82% 52%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 215 30% 35% / 0.2;
+    --input: 215 30% 35% / 0.3;
+    --ring: 231 73% 72%;
+    --sidebar-background: 220 40% 15%;
+    --sidebar-foreground: 225 100% 95%;
+    --sidebar-primary: 231 73% 72%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 220 30% 20%;
+    --sidebar-accent-foreground: 225 100% 95%;
+    --sidebar-border: 215 30% 35% / 0.2;
+    --sidebar-ring: 231 73% 72%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply text-foreground;
+    font-family: var(--font-body);
+    background: linear-gradient(135deg, hsl(222, 47%, 11%) 0%, hsl(220, 40%, 15%) 50%, hsl(218, 35%, 20%) 100%);
+    min-height: 100vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+    position: relative;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-y;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image: 
+      radial-gradient(2px 2px at 20px 30px, hsla(225, 100%, 95%, 0.4), transparent),
+      radial-gradient(2px 2px at 40px 70px, hsla(203, 94%, 78%, 0.3), transparent),
+      radial-gradient(1px 1px at 50px 50px, hsla(0, 0%, 100%, 0.4), transparent),
+      radial-gradient(1px 1px at 80px 10px, hsla(250, 100%, 92%, 0.3), transparent),
+      radial-gradient(2px 2px at 130px 80px, hsla(231, 73%, 72%, 0.4), transparent),
+      radial-gradient(3px 3px at 100px 50px, hsla(225, 100%, 95%, 0.6), transparent),
+      radial-gradient(2px 2px at 200px 150px, hsla(203, 94%, 78%, 0.5), transparent),
+      radial-gradient(2px 2px at 150px 100px, hsla(231, 73%, 72%, 0.6), transparent);
+    background-size: 200px 200px, 200px 200px, 200px 200px, 200px 200px, 200px 200px, 350px 350px, 350px 350px, 350px 350px;
+    background-position: 0 0, 40px 60px, 130px 270px, 70px 100px, 0 0, 0 0, 100px 200px, 50px 100px;
+    animation: space-drift 200s linear infinite;
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    pointer-events: none;
+    background: 
+      radial-gradient(ellipse 600px 400px at 20% 30%, hsla(231, 73%, 72%, 0.15), transparent),
+      radial-gradient(ellipse 800px 600px at 80% 70%, hsla(199, 98%, 61%, 0.1), transparent),
+      radial-gradient(ellipse 1000px 800px at 50% 50%, hsla(203, 94%, 78%, 0.08), transparent);
+    animation: nebula-float 60s ease-in-out infinite alternate;
+  }
+
+  /* Cometas com efeito de rastro (motion trail) */
+  .shooting-star {
+    position: fixed;
+    width: 3px;
+    height: 3px;
+    background: white;
+    border-radius: 50%;
+    box-shadow: 
+      0 0 6px 2px rgba(255, 255, 255, 0.8),
+      -10px 5px 0 -1px rgba(255, 255, 255, 0.6),
+      -20px 10px 0 -1px rgba(255, 255, 255, 0.4),
+      -30px 15px 0 -1px rgba(255, 255, 255, 0.3),
+      -40px 20px 0 -1px rgba(255, 255, 255, 0.2),
+      -50px 25px 0 -2px rgba(255, 255, 255, 0.1);
+    animation: shooting 4s linear infinite;
+    z-index: 1;
+    pointer-events: none;
+    filter: blur(0.3px);
+  }
+
+  .shooting-star:nth-child(1) {
+    top: 25%;
+    left: -100px;
+    animation-delay: 0s;
+    animation-duration: 30s;
+    animation-name: shooting-left;
+  }
+
+  .shooting-star:nth-child(2) {
+    top: 60%;
+    right: -100px;
+    animation-delay: 5s;
+    animation-duration: 30s;
+    animation-name: shooting-right;
+    box-shadow: 
+      0 0 6px 2px rgba(255, 255, 255, 0.8),
+      10px 5px 0 -1px rgba(255, 255, 255, 0.6),
+      20px 10px 0 -1px rgba(255, 255, 255, 0.4),
+      30px 15px 0 -1px rgba(255, 255, 255, 0.3),
+      40px 20px 0 -1px rgba(255, 255, 255, 0.2),
+      50px 25px 0 -2px rgba(255, 255, 255, 0.1);
+  }
+
+  .shooting-star:nth-child(3) {
+    top: -100px;
+    left: 30%;
+    animation-delay: 10s;
+    animation-duration: 30s;
+    animation-name: shooting-top;
+    box-shadow: 
+      0 0 6px 2px rgba(255, 255, 255, 0.8),
+      -5px -10px 0 -1px rgba(255, 255, 255, 0.6),
+      -10px -20px 0 -1px rgba(255, 255, 255, 0.4),
+      -15px -30px 0 -1px rgba(255, 255, 255, 0.3),
+      -20px -40px 0 -1px rgba(255, 255, 255, 0.2),
+      -25px -50px 0 -2px rgba(255, 255, 255, 0.1);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+  }
+
+  /* Todos os elementos de conteúdo devem estar acima do fundo */
+  #root {
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  html {
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Container de estrelas cadentes */
+  body:not(.no-custom-cursor) #shooting-stars-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  /* Esconder cometas em páginas específicas */
+  body.no-custom-cursor #shooting-stars-container {
+    display: none;
+  }
+}
+
+@layer utilities {
+  /* Animações do Espaço */
+  @keyframes space-drift {
+    from { 
+      transform: rotate(0deg) translateX(0px); 
+      background-position: 0 0, 40px 60px, 130px 270px, 70px 100px, 0 0, 0 0, 100px 200px, 50px 100px;
+    }
+    to { 
+      transform: rotate(360deg) translateX(100px); 
+      background-position: 200px 200px, 240px 260px, 330px 470px, 270px 300px, 350px 350px, 350px 350px, 450px 550px, 400px 450px;
+    }
+  }
+
+  @keyframes nebula-float {
+    0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+    50% { transform: translate(-30px, -20px) scale(1.1) rotate(5deg); }
+    100% { transform: translate(20px, -30px) scale(1.05) rotate(-5deg); }
+  }
+
+  @keyframes shooting-left {
+    0% {
+      transform: translateX(0) translateY(0) rotate(-45deg);
+      opacity: 1;
+    }
+    100% {
+      transform: translateX(1200px) translateY(600px) rotate(-45deg);
+      opacity: 0;
+    }
+  }
+
+  @keyframes shooting-right {
+    0% {
+      transform: translateX(0) translateY(0) rotate(-135deg);
+      opacity: 1;
+    }
+    100% {
+      transform: translateX(-1200px) translateY(600px) rotate(-135deg);
+      opacity: 0;
+    }
+  }
+
+  @keyframes shooting-top {
+    0% {
+      transform: translateX(0) translateY(0) rotate(-70deg);
+      opacity: 1;
+    }
+    100% {
+      transform: translateX(600px) translateY(1200px) rotate(-70deg);
+      opacity: 0;
+    }
+  }
+
+  /* Animações de entrada */
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes fade-in-up {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fade-in-down {
+    from {
+      opacity: 0;
+      transform: translateY(-30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fade-in-left {
+    from {
+      opacity: 0;
+      transform: translateX(-30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes fade-in-right {
+    from {
+      opacity: 0;
+      transform: translateX(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes slide-in-up {
+    from {
+      transform: translateY(100%);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slide-in-down {
+    from {
+      transform: translateY(-100%);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes scale-in {
+    from {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes scale-in-center {
+    from {
+      opacity: 0;
+      transform: scale(0.5);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  /* Animações de movimento contínuo */
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-20px);
+    }
+  }
+
+  @keyframes float-slow {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  @keyframes float-reverse {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(20px);
+    }
+  }
+
+  @keyframes bounce-slow {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  @keyframes pulse-glow {
+    0%, 100% {
+      opacity: 1;
+      box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+    }
+    50% {
+      opacity: 0.8;
+      box-shadow: 0 0 40px rgba(59, 130, 246, 0.8);
+    }
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: 0% 50%;
+    }
+    100% {
+      background-position: 200% 50%;
+    }
+  }
+
+  @keyframes glow {
+    0%, 100% {
+      box-shadow: 0 0 20px hsl(210 100% 55% / 0.5);
+    }
+    50% {
+      box-shadow: 0 0 40px hsl(210 100% 55% / 0.8);
+    }
+  }
+
+  @keyframes rotate-slow {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes wiggle {
+    0%, 100% {
+      transform: rotate(0deg);
+    }
+    25% {
+      transform: rotate(5deg);
+    }
+    75% {
+      transform: rotate(-5deg);
+    }
+  }
+
+  @keyframes shake {
+    0%, 100% {
+      transform: translateX(0);
+    }
+    25% {
+      transform: translateX(-5px);
+    }
+    75% {
+      transform: translateX(5px);
+    }
+  }
+
+  @keyframes gradient-x {
+    0%, 100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+
+  @keyframes gradient-y {
+    0%, 100% {
+      background-position: 50% 0%;
+    }
+    50% {
+      background-position: 50% 100%;
+    }
+  }
+
+  @keyframes gradient-xy {
+    0%, 100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+
+  /* Animações de gradiente para títulos - Efeito de ondas azul para rosa */
+  @keyframes gradient-wave {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  @keyframes gradient-wave-smooth {
+    0% {
+      background-position: -200% 50%;
+    }
+    100% {
+      background-position: 200% 50%;
+    }
+  }
+
+  /* Animação de onda única - do início ao fim */
+  @keyframes gradient-wave-single {
+    0% {
+      background-position: -400% 50%;
+      opacity: 0.2;
+    }
+    20% {
+      opacity: 1;
+    }
+    80% {
+      opacity: 1;
+    }
+    100% {
+      background-position: 400% 50%;
+      opacity: 0.2;
+    }
+  }
+
+  /* Classes de animação */
+  .animate-fade-in {
+    animation: fade-in 0.6s ease-out;
+  }
+
+  .animate-fade-in-up {
+    animation: fade-in-up 0.6s ease-out;
+  }
+
+  .animate-fade-in-down {
+    animation: fade-in-down 0.6s ease-out;
+  }
+
+  .animate-fade-in-left {
+    animation: fade-in-left 0.6s ease-out;
+  }
+
+  .animate-fade-in-right {
+    animation: fade-in-right 0.6s ease-out;
+  }
+
+  .animate-slide-in-up {
+    animation: slide-in-up 0.5s ease-out;
+  }
+
+  .animate-slide-in-down {
+    animation: slide-in-down 0.5s ease-out;
+  }
+
+  .animate-scale-in {
+    animation: scale-in 0.5s ease-out;
+  }
+
+  .animate-scale-in-center {
+    animation: scale-in-center 0.5s ease-out;
+  }
+
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  .animate-float-slow {
+    animation: float-slow 4s ease-in-out infinite;
+  }
+
+  .animate-float-reverse {
+    animation: float-reverse 3s ease-in-out infinite;
+  }
+
+  .animate-bounce-slow {
+    animation: bounce-slow 2s ease-in-out infinite;
+  }
+
+  .animate-pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+
+  .animate-shimmer {
+    animation: shimmer 3s ease infinite;
+    background-size: 200% 200%;
+  }
+
+  .animate-glow {
+    animation: glow 2s ease-in-out infinite;
+  }
+
+  .animate-rotate-slow {
+    animation: rotate-slow 20s linear infinite;
+  }
+
+  .animate-wiggle {
+    animation: wiggle 0.5s ease-in-out;
+  }
+
+  .animate-shake {
+    animation: shake 0.5s ease-in-out;
+  }
+
+  /* Classes para texto com gradiente animado - Blue Moon */
+  .text-gradient-animated {
+    background: linear-gradient(
+      90deg,
+      hsl(210, 100%, 35%),  /* Deep Blue */
+      hsl(210, 100%, 45%),  /* Ocean Blue */
+      hsl(210, 100%, 55%),  /* Bright Blue */
+      hsl(200, 100%, 65%),  /* Sky Blue */
+      hsl(200, 100%, 75%),  /* Light Blue */
+      hsl(210, 80%, 75%),   /* Soft Blue */
+      hsl(200, 100%, 75%),  /* Light Blue */
+      hsl(200, 100%, 65%),  /* Sky Blue */
+      hsl(210, 100%, 55%),  /* Bright Blue */
+      hsl(210, 100%, 45%),  /* Ocean Blue */
+      hsl(210, 100%, 35%)   /* Deep Blue */
+    );
+    background-size: 500% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradient-wave-smooth 10s linear infinite;
+  }
+
+  .text-gradient-rainbow {
+    background: linear-gradient(
+      90deg,
+      hsl(210, 100%, 35%),  /* Deep Blue */
+      hsl(210, 100%, 45%),  /* Ocean Blue */
+      hsl(210, 100%, 55%),  /* Bright Blue */
+      hsl(200, 100%, 65%),  /* Sky Blue */
+      hsl(200, 100%, 75%),  /* Light Blue */
+      hsl(200, 85%, 80%),   /* Very Light Blue */
+      hsl(200, 100%, 85%),  /* Very Light Blue */
+      hsl(200, 100%, 75%),  /* Light Blue */
+      hsl(200, 100%, 65%),  /* Sky Blue */
+      hsl(210, 100%, 55%),  /* Bright Blue */
+      hsl(210, 100%, 45%),  /* Ocean Blue */
+      hsl(210, 100%, 35%)   /* Deep Blue */
+    );
+    background-size: 600% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradient-wave-smooth 12s linear infinite;
+  }
+
+  /* Animação letra por letra - gradiente em onda Blue Moon */
+  .text-gradient-letter {
+    background: linear-gradient(
+      90deg,
+      hsl(210, 100%, 35%),  /* Deep Blue */
+      hsl(210, 100%, 45%),  /* Ocean Blue */
+      hsl(210, 100%, 55%),  /* Bright Blue */
+      hsl(200, 100%, 65%),  /* Sky Blue */
+      hsl(200, 100%, 75%),  /* Light Blue */
+      hsl(210, 85%, 78%),   /* Soft Light Blue */
+      hsl(200, 100%, 85%),  /* Very Light Blue */
+      hsl(200, 100%, 75%),  /* Light Blue */
+      hsl(200, 100%, 65%),  /* Sky Blue */
+      hsl(210, 100%, 55%),  /* Bright Blue */
+      hsl(210, 100%, 45%),  /* Ocean Blue */
+      hsl(210, 100%, 35%)   /* Deep Blue */
+    );
+    background-size: 500% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradient-wave-single 15s ease-in-out infinite;
+    display: inline-block;
+    will-change: background-position;
+  }
+
+  /* Efeitos de hover */
+  .hover-scale {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .hover-scale:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  }
+
+  .hover-lift {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .hover-lift:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+  }
+
+  .hover-glow {
+    transition: box-shadow 0.3s ease;
+  }
+
+  .hover-glow:hover {
+    box-shadow: 0 0 30px hsl(210 100% 55% / 0.5);
+  }
+
+  /* Blue Moon gradient utilities */
+  .bg-gradient-luxury {
+    background: linear-gradient(135deg, hsl(231, 73%, 72%) 0%, hsl(203, 94%, 78%) 100%);
+  }
+
+  .bg-gradient-luxury-gold {
+    background: linear-gradient(135deg, hsl(231, 73%, 72%) 0%, hsl(199, 98%, 61%) 50%, hsl(225, 100%, 95%) 100%);
+  }
+
+  /* Glass morphism effect - Space Theme */
+  .glass-morphism {
+    background: linear-gradient(145deg, hsla(220, 40%, 15%, 0.6), hsla(222, 47%, 11%, 0.4));
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 30px;
+    border: 1px solid hsla(215, 30%, 55%, 0.2);
+    box-shadow: 
+      0 25px 50px -12px hsla(0, 0%, 0%, 0.5),
+      inset 0 1px 0 hsla(225, 100%, 95%, 0.1);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .glass-morphism:hover {
+    transform: translateY(-5px);
+    box-shadow: 
+      0 35px 60px -15px hsla(199, 98%, 61%, 0.3),
+      inset 0 1px 0 hsla(225, 100%, 95%, 0.2);
+    border-color: hsla(199, 98%, 61%, 0.3);
+  }
+
+  /* Lunar Button Styles */
+  .btn-luxury-primary {
+    background: linear-gradient(135deg, hsl(231, 73%, 72%) 0%, hsl(260, 67%, 35%) 100%);
+    color: hsl(225, 100%, 95%);
+    padding: 15px 40px;
+    border: none;
+    border-radius: 50px;
+    font-weight: 300;
+    letter-spacing: 1px;
+    font-size: 16px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    box-shadow: 0 4px 15px hsla(231, 73%, 72%, 0.3);
+  }
+
+  .btn-luxury-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, hsla(255, 255, 255, 0.3), transparent);
+    transition: left 0.7s;
+  }
+
+  .btn-luxury-primary:hover::before {
+    left: 100%;
+  }
+
+  .btn-luxury-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px hsla(231, 73%, 72%, 0.5);
+  }
+
+  .btn-luxury-gold {
+    background: linear-gradient(135deg, hsl(203, 94%, 78%) 0%, hsl(199, 98%, 61%) 50%, hsl(225, 100%, 95%) 100%);
+    background-size: 200% 200%;
+    color: hsl(220, 77%, 32%);
+    padding: 15px 40px;
+    border: none;
+    border-radius: 50px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    font-size: 16px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    text-transform: uppercase;
+    box-shadow: 0 4px 15px hsla(203, 94%, 78%, 0.3);
+    transition: all 0.5s ease;
+    animation: shimmer 3s ease infinite;
+  }
+
+  .btn-luxury-gold:hover {
+    background-position: 100% 50%;
+    box-shadow: 0 6px 20px hsla(203, 94%, 78%, 0.5);
+    transform: translateY(-2px);
+  }
+
+  .btn-luxury-outline {
+    border: 2px solid hsl(231, 73%, 72%);
+    color: hsl(231, 73%, 72%);
+    background: transparent;
+    padding: 15px 40px;
+    border-radius: 50px;
+    font-weight: 300;
+    letter-spacing: 1px;
+    font-size: 16px;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+  }
+
+  .btn-luxury-outline:hover {
+    background: hsl(231, 73%, 72%);
+    color: hsl(225, 100%, 95%);
+    transform: translateY(-2px);
+  }
+
+  /* Scroll reveal */
+  .scroll-reveal {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
+
+  .scroll-reveal.revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Smooth scroll */
+  html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Garantir scroll no mobile */
+  @media (max-width: 768px) {
+    * {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      overflow-y: auto !important;
+      overflow-x: hidden !important;
+      -webkit-overflow-scrolling: touch !important;
+      touch-action: pan-y pinch-zoom !important;
+      position: relative !important;
+      height: auto !important;
+      min-height: 100vh !important;
+    }
+    
+    html {
+      overflow-y: auto !important;
+      overflow-x: hidden !important;
+      -webkit-overflow-scrolling: touch !important;
+      height: auto !important;
+    }
+
+    #root {
+      overflow-y: auto !important;
+      overflow-x: hidden !important;
+      -webkit-overflow-scrolling: touch !important;
+      width: 100% !important;
+      min-height: 100vh !important;
+      position: relative !important;
+    }
+
+    /* Garantir que elementos fixed não bloqueiem scroll */
+    body::before,
+    body::after {
+      pointer-events: none !important;
+      touch-action: none !important;
+    }
+
+    /* Garantir que seções permitam scroll */
+    section {
+      overflow-x: hidden !important;
+      overflow-y: visible !important;
+      position: relative !important;
+    }
+
+    /* Container principal */
+    .container {
+      width: 100% !important;
+      max-width: 100% !important;
+      padding-left: 1rem !important;
+      padding-right: 1rem !important;
+    }
+
+    /* Garantir que divs com min-h-screen não bloqueiem */
+    .min-h-screen {
+      min-height: 100vh !important;
+      height: auto !important;
+      overflow-x: hidden !important;
+      overflow-y: visible !important;
+    }
+
+    /* Garantir que elementos com position fixed não bloqueiem */
+    [class*="fixed"] {
+      touch-action: none !important;
+      pointer-events: auto !important;
+    }
+
+    /* Garantir scroll em todas as seções */
+    section {
+      position: relative !important;
+      overflow-x: hidden !important;
+      overflow-y: visible !important;
+    }
+
+    /* Navbar fixo não deve bloquear */
+    nav {
+      position: sticky !important;
+      touch-action: pan-y !important;
+    }
+
+    /* Garantir que elementos absolutos não bloqueiem */
+    [class*="absolute"] {
+      pointer-events: none !important;
+    }
+
+    [class*="absolute"] * {
+      pointer-events: auto !important;
+    }
+
+    /* Garantir que botões e links funcionem */
+    button, a, [role="button"] {
+      touch-action: manipulation !important;
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1) !important;
+    }
+
+    /* Prevenir zoom indesejado em inputs */
+    input, textarea, select {
+      font-size: 16px !important;
+    }
+
+    /* Garantir que o conteúdo principal seja scrollável */
+    main, [role="main"] {
+      overflow-x: hidden !important;
+      overflow-y: auto !important;
+      -webkit-overflow-scrolling: touch !important;
+    }
+  }
+
+  /* Parallax effect */
+  .parallax {
+    will-change: transform;
+  }
+
+  /* Animation delays */
+  .delay-100 {
+    animation-delay: 100ms;
+  }
+
+  .delay-200 {
+    animation-delay: 200ms;
+  }
+
+  .delay-300 {
+    animation-delay: 300ms;
+  }
+
+  .delay-400 {
+    animation-delay: 400ms;
+  }
+
+  .delay-500 {
+    animation-delay: 500ms;
+  }
+}

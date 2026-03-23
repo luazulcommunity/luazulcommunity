@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <defs>
+    <style>
+      .logo-text {
+        font-family: 'Playfair Display', serif;
+        font-weight: 700;
+        font-size: 24px;
+        fill: white;
+      }
+      .logo-subtext {
+        font-family: 'Playfair Display', serif;
+        font-weight: 400;
+        font-size: 12px;
+        fill: white;
+      }
+    </style>
+  </defs>
+  
+  <!-- Background circle -->
+  <circle cx="100" cy="100" r="95" fill="#0F172A"/>
+  
+  <!-- Glow effect -->
+  <circle cx="100" cy="100" r="85" fill="#1E3A8A" opacity="0.3"/>
+  
+  <!-- Text -->
+  <text x="100" y="90" text-anchor="middle" class="logo-text">LUAZUL</text>
+  <text x="100" y="115" text-anchor="middle" class="logo-subtext">COMMUNITY</text>
+</svg>
