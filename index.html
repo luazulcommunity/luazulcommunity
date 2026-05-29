@@ -916,6 +916,23 @@
     .quote p{font-size:20px}
     .sep{height:80px}
   }
+
+  /* ===== MODO LEVE MOBILE — evita crash por excesso de compositing/memoria ===== */
+  @media (max-width:820px), (pointer:coarse){
+    *{
+      backdrop-filter:none !important;
+      -webkit-backdrop-filter:none !important;
+      filter:none !important;
+      animation:none !important;
+    }
+    /* re-habilita SO as animacoes leves de revelar o Hero (rodam 1x, sem custo continuo) */
+    body.loaded .hero-eyebrow{animation:fadeUp 1s .1s both !important}
+    body.loaded .hero h1{animation:fadeUp 1.2s .25s both !important}
+    body.loaded .hero .sub{animation:fadeUp 1s .55s both !important}
+    body.loaded .hero .ctas{animation:fadeUp 1s .75s both !important}
+    body.loaded .hero .hero-micro{animation:fadeUp 1s .95s both !important}
+    body.loaded .hero .moon{animation:moonRise 2.2s .1s both !important}
+  }
 </style>
 </head>
 <body>
@@ -1526,9 +1543,11 @@
     const ctx = cv.getContext('2d');
     const FRAME_MS = 130;            // higher = slower spin
     function fallbackImg(){
+      // Mobile: lua estatica (moon.png) em vez do webp animado, para nao decodificar frames continuamente
+      const isMob = window.matchMedia('(max-width:820px)').matches || window.matchMedia('(pointer:coarse)').matches;
       const img = document.createElement('img');
       img.className = 'orbit-moon ready';
-      img.src = 'assets/moon-spin.webp';
+      img.src = isMob ? 'assets/moon.png' : 'assets/moon-spin.webp';
       img.alt = 'Lune Cycle Wide';
       cv.replaceWith(img);
     }
@@ -1780,6 +1799,8 @@
   (function(){
     const cv = document.getElementById('starfield');
     if(!cv) return;
+    // Mobile: desliga o starfield (canvas animado continuo) para aliviar o renderer
+    if(window.matchMedia('(max-width:820px)').matches || window.matchMedia('(pointer:coarse)').matches){ cv.style.display='none'; return; }
     const ctx = cv.getContext('2d');
     let w, h, dpr, stars, shooting = [], t = 0;
     function init(){
