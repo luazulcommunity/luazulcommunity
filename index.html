@@ -917,27 +917,24 @@
     .sep{height:80px}
   }
 
-  /* ===== MODO LEVE MOBILE — evita crash por excesso de compositing/memoria ===== */
+  /* ===== MODO LEVE MOBILE — corta SO o compositing pesado, mantem as animacoes leves =====
+     O crash vinha de blur de fundo (backdrop-filter), blurs/drop-shadows estaticos grandes,
+     e de 2 animacoes que animam blur de sombra (logo-pulse: drop-shadow ate 130px; moonGlow:
+     box-shadow ate 80px). Estrelas, lua girando, orbitas e twinkle sao transform/opacity
+     (compositor puro) -> leves -> ficam ativas. */
   @media (max-width:820px), (pointer:coarse){
     *{
       backdrop-filter:none !important;
       -webkit-backdrop-filter:none !important;
       filter:none !important;
-      animation:none !important;
     }
-    /* re-habilita SO as animacoes leves de revelar o Hero (rodam 1x, sem custo continuo) */
-    body.loaded .hero-eyebrow{animation:fadeUp 1s .1s both !important}
-    body.loaded .hero h1{animation:fadeUp 1.2s .25s both !important}
-    body.loaded .hero .sub{animation:fadeUp 1s .55s both !important}
-    body.loaded .hero .ctas{animation:fadeUp 1s .75s both !important}
-    body.loaded .hero .hero-micro{animation:fadeUp 1s .95s both !important}
-    body.loaded .hero .moon{animation:moonRise 2.2s .1s both !important}
-    /* loader: SO efeitos leves. O logo-pulse animava um drop-shadow de ate 130px
-       (a animacao sobrepoe o filter:none e estourava o renderer). Trocado por
-       brilho leve ESTATICO + aneis girando (rotacao pura, barata). */
-    .loader-logo img{filter:drop-shadow(0 0 16px rgba(77,141,255,.45)) !important}
-    .loader-logo::before{animation:ring-rot 14s linear infinite !important}
-    .loader-logo::after{animation:ring-rot 22s linear infinite reverse !important}
+    /* devolve so brilho/contraste (baratos, sem blur) pras luas nao ficarem apagadas */
+    .hero .moon img{filter:brightness(1.42) contrast(1.12) saturate(1.04) !important}
+    .orbit-moon{filter:brightness(1.06) contrast(1.05) !important}
+    /* loader: brilho leve estatico, sem o pulse pesado (drop-shadow animado) */
+    .loader-logo img{filter:drop-shadow(0 0 16px rgba(77,141,255,.45)) !important; animation:none !important}
+    /* desliga a outra animacao pesada: moonGlow anima box-shadow ate 80px */
+    .phase-dot.m-full{animation:none !important}
   }
 </style>
 </head>
@@ -1549,11 +1546,11 @@
     const ctx = cv.getContext('2d');
     const FRAME_MS = 130;            // higher = slower spin
     function fallbackImg(){
-      // Mobile: lua estatica (moon.png) em vez do webp animado, para nao decodificar frames continuamente
-      const isMob = window.matchMedia('(max-width:820px)').matches || window.matchMedia('(pointer:coarse)').matches;
+      // Lua animada via <img> (webp toca sozinho, leve). Usado no mobile e como
+      // fallback no desktop sem ImageDecoder. O blend/mascara do CSS removem o fundo preto.
       const img = document.createElement('img');
       img.className = 'orbit-moon ready';
-      img.src = isMob ? 'assets/moon.png' : 'assets/moon-spin.webp';
+      img.src = 'assets/moon-spin.webp';
       img.alt = 'Lune Cycle Wide';
       cv.replaceWith(img);
     }
@@ -1805,8 +1802,6 @@
   (function(){
     const cv = document.getElementById('starfield');
     if(!cv) return;
-    // Mobile: desliga o starfield (canvas animado continuo) para aliviar o renderer
-    if(window.matchMedia('(max-width:820px)').matches || window.matchMedia('(pointer:coarse)').matches){ cv.style.display='none'; return; }
     const ctx = cv.getContext('2d');
     let w, h, dpr, stars, shooting = [], t = 0;
     function init(){
