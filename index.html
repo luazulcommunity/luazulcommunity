@@ -1534,7 +1534,11 @@
     }
     async function run(){
       try{
-        if(!('ImageDecoder' in window)) return fallbackImg();
+        // Mobile/touch: usa <img> leve (webp animado toca sozinho). O canvas via
+        // ImageDecoder estoura a memoria do Safari iOS e trava a aba em loop.
+        const isMobile = window.matchMedia('(max-width:820px)').matches
+                      || window.matchMedia('(pointer:coarse)').matches;
+        if(isMobile || !('ImageDecoder' in window)) return fallbackImg();
         const buf = await (await fetch('assets/moon-spin.webp')).arrayBuffer();
         const dec = new ImageDecoder({ data: buf, type: 'image/webp' });
         await dec.tracks.ready;
