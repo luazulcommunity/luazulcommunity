@@ -932,8 +932,10 @@
     body.loaded .hero .ctas{animation:fadeUp 1s .75s both !important}
     body.loaded .hero .hero-micro{animation:fadeUp 1s .95s both !important}
     body.loaded .hero .moon{animation:moonRise 2.2s .1s both !important}
-    /* re-habilita a apresentacao do loader (efeitos leves, tela dura ~2.4s) */
-    .loader-logo img{animation:logo-pulse 3s ease-in-out infinite !important}
+    /* loader: SO efeitos leves. O logo-pulse animava um drop-shadow de ate 130px
+       (a animacao sobrepoe o filter:none e estourava o renderer). Trocado por
+       brilho leve ESTATICO + aneis girando (rotacao pura, barata). */
+    .loader-logo img{filter:drop-shadow(0 0 16px rgba(77,141,255,.45)) !important}
     .loader-logo::before{animation:ring-rot 14s linear infinite !important}
     .loader-logo::after{animation:ring-rot 22s linear infinite reverse !important}
   }
@@ -1874,34 +1876,52 @@
     frame();
   })();
 
-  // Loader — count 1% → 100%, logo grows, bar fills
+  // Loader — pre-carrega os assets reais; a barra reflete o carregamento de verdade
+  // e o site so e revelado quando termina (com tempo minimo e trava de seguranca).
   (function(){
     const loader = document.getElementById('loader');
     const pctEl  = document.getElementById('loaderPct');
     const fill   = document.getElementById('loaderFill');
     const logo   = document.querySelector('.loader-logo img');
-    let pct = 0;
-    const start = performance.now();
-    const DURATION = 2400; // ms to reach 100%
+    if(!loader) return;
+
+    // assets que o site realmente usa
+    const ASSETS = [
+      'assets/logo-nav.png','assets/logo-sm.png','assets/moon.png','assets/moon-spin.webp',
+      'assets/vicky-glasses.jpg','assets/team-vicky.avif',
+      'assets/nelson.jpg','assets/davi.jpg','assets/francois.jpg'
+    ];
+    const total  = ASSETS.length + 1;   // +1 = fontes
+    const MIN_MS = 1400;                 // tempo minimo de exibicao (nao piscar)
+    const MAX_MS = 7000;                 // trava de seguranca (nunca prender no loader)
+    const start  = performance.now();
+
+    let loaded = 0, shown = 0, finished = false;
+    const bump = () => { loaded++; };
+
+    ASSETS.forEach(src => { const im = new Image(); im.onload = im.onerror = bump; im.src = src; });
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(bump); else bump();
+
+    function finish(){
+      if (finished) return; finished = true;
+      pctEl.textContent = '100%'; fill.style.width = '100%';
+      if (logo) logo.style.transform = 'scale(1.12)';
+      setTimeout(() => { loader.classList.add('done'); document.body.classList.add('loaded'); }, 320);
+    }
 
     function frame(now){
-      // ease-out progress
-      const t = Math.min((now - start) / DURATION, 1);
-      const eased = 1 - Math.pow(1 - t, 2.2);
-      pct = Math.max(1, Math.round(eased * 100));
+      const elapsed = now - start;
+      const real  = loaded / total;                 // progresso real dos assets
+      const timed = Math.min(elapsed / MIN_MS, 1);   // garante uma animacao minima visivel
+      const goal  = Math.min(real, timed, 0.99);     // avanca pelo mais lento dos dois
+      shown += (goal - shown) * 0.12;                // suaviza o movimento
+      const pct = Math.max(1, Math.round(shown * 100));
       pctEl.textContent = pct + '%';
       fill.style.width = pct + '%';
-      // logo grows from .6 → 1.12
-      if (logo) logo.style.transform = 'scale(' + (0.6 + 0.52 * eased).toFixed(3) + ')';
-      if (t < 1){
-        requestAnimationFrame(frame);
-      } else {
-        pctEl.textContent = '100%';
-        setTimeout(() => {
-          loader.classList.add('done');
-          document.body.classList.add('loaded');
-        }, 380);
-      }
+      if (logo) logo.style.transform = 'scale(' + (0.6 + 0.52 * shown).toFixed(3) + ')';
+
+      if ((loaded >= total && elapsed >= MIN_MS) || elapsed >= MAX_MS) finish();
+      else requestAnimationFrame(frame);
     }
     requestAnimationFrame(frame);
   })();
