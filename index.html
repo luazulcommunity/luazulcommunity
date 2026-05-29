@@ -932,6 +932,10 @@
     body.loaded .hero .ctas{animation:fadeUp 1s .75s both !important}
     body.loaded .hero .hero-micro{animation:fadeUp 1s .95s both !important}
     body.loaded .hero .moon{animation:moonRise 2.2s .1s both !important}
+    /* re-habilita a apresentacao do loader (efeitos leves, tela dura ~2.4s) */
+    .loader-logo img{animation:logo-pulse 3s ease-in-out infinite !important}
+    .loader-logo::before{animation:ring-rot 14s linear infinite !important}
+    .loader-logo::after{animation:ring-rot 22s linear infinite reverse !important}
   }
 </style>
 </head>
