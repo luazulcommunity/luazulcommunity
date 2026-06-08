@@ -9,9 +9,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg-0:#05081C;          /* deepest void */
-    --bg-1:#0A0E2A;          /* night */
-    --bg-2:#0D1B4C;          /* deep blue */
+    --bg-0:#030308;          /* near-black void */
+    --bg-1:#06070E;          /* night (mais preto) */
+    --bg-2:#0A0F22;          /* deep blue (esmaecido) */
     --ink-1:#1B3A8F;         /* luazul */
     --ink-2:#2A4FB0;         /* luazul lighter */
     --neon-1:#3A6BFF;        /* electric */
@@ -43,10 +43,10 @@
   .cosmos{
     position:fixed;inset:0;z-index:-4;overflow:hidden;
     background:
-      radial-gradient(ellipse at 20% 0%, rgba(58,107,255,.18), transparent 55%),
-      radial-gradient(ellipse at 80% 30%, rgba(42,79,176,.22), transparent 50%),
-      radial-gradient(ellipse at 50% 80%, rgba(27,58,143,.20), transparent 55%),
-      linear-gradient(180deg, #05081C 0%, #0A0E2A 35%, #08102E 70%, #05081C 100%);
+      radial-gradient(ellipse at 20% 0%, rgba(58,107,255,.08), transparent 55%),
+      radial-gradient(ellipse at 80% 30%, rgba(42,79,176,.10), transparent 50%),
+      radial-gradient(ellipse at 50% 80%, rgba(27,58,143,.07), transparent 55%),
+      linear-gradient(180deg, #040509 0%, #06070E 35%, #05060F 70%, #030308 100%);
   }
   .cosmos::before, .cosmos::after{
     content:"";position:absolute;inset:0;
@@ -100,9 +100,9 @@
     position:absolute;border-radius:50%;filter:blur(80px);opacity:.5;
     background:radial-gradient(circle, var(--neon-1) 0%, transparent 70%);
   }
-  .nebula b:nth-child(1){width:520px;height:520px;top:-120px;right:-120px;background:radial-gradient(circle,#3A6BFF,transparent 70%);opacity:.18}
-  .nebula b:nth-child(2){width:640px;height:640px;bottom:-200px;left:-200px;background:radial-gradient(circle,#2A4FB0,transparent 70%);opacity:.22}
-  .nebula b:nth-child(3){width:380px;height:380px;top:40%;left:30%;background:radial-gradient(circle,#4D8DFF,transparent 70%);opacity:.10}
+  .nebula b:nth-child(1){width:520px;height:520px;top:-120px;right:-120px;background:radial-gradient(circle,#3A6BFF,transparent 70%);opacity:.08}
+  .nebula b:nth-child(2){width:640px;height:640px;bottom:-200px;left:-200px;background:radial-gradient(circle,#2A4FB0,transparent 70%);opacity:.10}
+  .nebula b:nth-child(3){width:380px;height:380px;top:40%;left:30%;background:radial-gradient(circle,#4D8DFF,transparent 70%);opacity:.05}
 
   /* ---------- Layout primitives ---------- */
   .wrap{max-width:1320px;margin:0 auto;padding:0 40px;position:relative}
@@ -807,12 +807,12 @@
     position:absolute;left:50%;top:50%;transform:translate(-50%,-46%);
     width:min(680px,78vw);aspect-ratio:1;pointer-events:none;z-index:1;
     display:block;
-    filter:drop-shadow(0 0 60px rgba(77,141,255,.28));
+    filter:drop-shadow(0 0 46px rgba(77,141,255,.13));
   }
   /* soft aura hugging the moon edge — subtle, no hard disk */
   .hero .moon::before{
     content:"";position:absolute;inset:-4%;border-radius:50%;
-    background:radial-gradient(circle closest-side, transparent 60%, rgba(86,124,206,.18) 78%, rgba(48,74,150,.07) 90%, transparent 100%);
+    background:radial-gradient(circle closest-side, transparent 60%, rgba(86,124,206,.10) 78%, rgba(48,74,150,.04) 90%, transparent 100%);
     filter:blur(16px);
     z-index:0;
   }

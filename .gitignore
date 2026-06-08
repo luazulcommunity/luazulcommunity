@@ -10,3 +10,8 @@ $RECYCLE.BIN/
 .idea/
 .vscode/
 *.log
+
+# Previews/artefatos de teste local (Playwright)
+.playwright-mcp/
+antes-*.jpeg
+depois*.jpeg
