@@ -11,9 +11,10 @@ mantendo o visual atual integrado ao cenário (aura, feather, opacidade, engrave
 
 ## Arquitetura
 
-- **Three.js** em versão fixa, carregado via CDN como módulo ES, de forma
-  preguiçosa (após o loader do site terminar). O site continua single-file
-  (`index.html`); o código 3D vive num `<script type="module">` próprio.
+- **Three.js** em versão fixa (0.170.0), self-hospedado em `assets/three.module.js`,
+  carregado como módulo ES de forma preguiçosa (após o loader do site terminar) —
+  sem dependência de CDN em runtime. O site continua single-file (`index.html`);
+  o código 3D vive num `<script type="module">` próprio.
 - **Textura:** baixar a textura da superfície lunar do repositório oficial do
   three.js e salvar localmente em `assets/moon-texture.jpg` (sem dependência de
   CDN em runtime para o asset).
@@ -21,7 +22,6 @@ mantendo o visual atual integrado ao cenário (aura, feather, opacidade, engrave
   (no lugar visual do `<img>` em `.moon-rot`). Permanecem intactos e por cima:
   - aura azulada (`.hero .moon::before`)
   - brilho (`.hero .moon::after`)
-  - texto gravado "LUAZUL" (`.engrave`)
   - estrelas ao redor (`.moon-stars`) e orbiters
 - **Visual casado com o cenário:**
   - mesma borda esfumada via `mask-image` radial aplicada ao canvas
@@ -48,6 +48,11 @@ mantendo o visual atual integrado ao cenário (aura, feather, opacidade, engrave
 - **Performance:** DPR limitado a 2; render pausa quando o hero sai da viewport
   (IntersectionObserver); `prefers-reduced-motion` desativa auto-rotação e
   inércia.
+- **Perda de contexto WebGL:** se o contexto for perdido depois do swap, a classe
+  `moon3d-on` é removida e a imagem original volta; o loop de render para.
+- **Trade-off de interação:** com o 3D ativo, `.hero .wrap` recebe
+  `pointer-events:none` (links re-habilitados individualmente) para o drag chegar
+  ao canvas — o texto do hero deixa de ser selecionável enquanto o 3D roda.
 
 ## Fora de escopo
 

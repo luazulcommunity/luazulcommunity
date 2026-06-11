@@ -1996,8 +1996,9 @@
   let THREE, renderer;
   const canvas = document.createElement('canvas');
   canvas.className = 'moon3d';
+  canvas.setAttribute('aria-hidden', 'true');
   try {
-    THREE = await import('https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js');
+    THREE = await import('./assets/three.module.js'); // three@0.170.0 self-hospedado (sem CDN em runtime)
     renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
   } catch (e) { return; }
 
@@ -2060,7 +2061,8 @@
   });
   const release = () => {
     dragging = false; canvas.style.cursor = 'grab'; lastInteract = performance.now();
-    if (REDUCED) { velX = 0; velY = 0; }
+    // segurou parado antes de soltar -> sem inercia (a velocidade era do movimento antigo)
+    if (REDUCED || performance.now() - lastMoveT > 100) { velX = 0; velY = 0; }
   };
   canvas.addEventListener('pointerup', release);
   canvas.addEventListener('pointercancel', release);
