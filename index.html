@@ -843,6 +843,9 @@
   }
   .hero .moon.moon3d-on canvas.moon3d{display:block}
   .hero .moon.moon3d-on .moon-rot{display:none}
+  /* com o 3D ativo, o wrap deixa o drag passar pro canvas; links continuam clicaveis */
+  .hero .moon.moon3d-on ~ .wrap{pointer-events:none}
+  .hero .moon.moon3d-on ~ .wrap a{pointer-events:auto}
   /* engraved LUAZUL — stays upright while the moon turns beneath it */
   .hero .moon .engrave{
     position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
