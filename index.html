@@ -945,6 +945,8 @@
     /* devolve so brilho/contraste (baratos, sem blur) pras luas nao ficarem apagadas */
     .hero .moon img{filter:brightness(1.42) contrast(1.12) saturate(1.04) !important}
     .orbit-moon{filter:brightness(1.06) contrast(1.05) !important}
+    /* fotos da equipe continuam P&B no mobile (grayscale e barato, sem blur) */
+    .tr-mimg, .team-photo img{filter:grayscale(1) contrast(1.05) !important}
     /* loader: brilho leve estatico, sem o pulse pesado (drop-shadow animado) */
     .loader-logo img{filter:drop-shadow(0 0 16px rgba(77,141,255,.45)) !important; animation:none !important}
     /* desliga a outra animacao pesada: moonGlow anima box-shadow ate 80px */
@@ -1429,6 +1431,7 @@
         <img data-i="1" src="assets/nelson.jpg" alt="" style="object-position:center 30%" />
         <img data-i="2" src="assets/davi.jpg" alt="" style="object-position:center 18%" />
         <img data-i="3" src="assets/francois.jpg" alt="" style="object-position:center 28%" />
+        <img data-i="4" src="assets/marcia.jpg" alt="" style="object-position:center 25%" />
       </div>
 
       <div class="team-row" data-i="0" tabindex="0">
@@ -1468,6 +1471,16 @@
         <div class="tr-mobile">
           <img class="tr-mimg" src="assets/francois.jpg" alt="François De Giuli" style="object-position:center 28%" />
           <p class="tr-bio">Spécialisé en photographie haut de gamme. Met à disposition son studio et son matériel professionnels pour renforcer l'image premium de chaque projet.</p>
+        </div>
+      </div>
+
+      <div class="team-row" data-i="4" tabindex="0">
+        <span class="tr-name">Márcia Neiva</span>
+        <span class="tr-role">Community Manager Brésil</span>
+        <span class="tr-hint">Toucher pour voir →</span>
+        <div class="tr-mobile">
+          <img class="tr-mimg" src="assets/marcia.jpg" alt="Márcia Neiva" style="object-position:center 25%" />
+          <p class="tr-bio">Anime et fédère la communauté brésilienne de la marque. Engagement, relation avec l'audience et présence sur les réseaux au Brésil.</p>
         </div>
       </div>
     </div>
@@ -1898,7 +1911,7 @@
     const ASSETS = [
       'assets/logo-nav.png','assets/logo-sm.png','assets/moon.png','assets/moon-spin.webp',
       'assets/vicky-glasses.jpg','assets/team-vicky.avif',
-      'assets/nelson.jpg','assets/davi.jpg','assets/francois.jpg'
+      'assets/nelson.jpg','assets/davi.jpg','assets/francois.jpg','assets/marcia.jpg'
     ];
     const total  = ASSETS.length + 1;   // +1 = fontes
     const MIN_MS = 1400;                 // tempo minimo de exibicao (nao piscar)
