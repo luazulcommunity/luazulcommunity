@@ -823,6 +823,7 @@
   @keyframes moonOrbit{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
   .hero .moon img{
     width:100%;height:100%;object-fit:cover;display:block;
+    opacity:.72;
     filter:brightness(1.42) contrast(1.12) saturate(1.04);
     -webkit-mask-image:radial-gradient(circle closest-side, #000 72%, rgba(0,0,0,.5) 88%, transparent 99%);
     mask-image:radial-gradient(circle closest-side, #000 72%, rgba(0,0,0,.5) 88%, transparent 99%);
@@ -832,6 +833,16 @@
     background:radial-gradient(circle at 32% 36%, rgba(150,190,255,.16), transparent 52%);
     mix-blend-mode:screen;pointer-events:none;
   }
+  /* lua 3D — canvas entra no lugar da imagem quando o WebGL renderiza (so desktop) */
+  .hero .moon canvas.moon3d{
+    position:absolute;inset:0;width:100%;height:100%;z-index:1;
+    display:none;pointer-events:auto;cursor:grab;touch-action:none;
+    opacity:.72;
+    -webkit-mask-image:radial-gradient(circle closest-side, #000 72%, rgba(0,0,0,.5) 88%, transparent 99%);
+    mask-image:radial-gradient(circle closest-side, #000 72%, rgba(0,0,0,.5) 88%, transparent 99%);
+  }
+  .hero .moon.moon3d-on canvas.moon3d{display:block}
+  .hero .moon.moon3d-on .moon-rot{display:none}
   /* engraved LUAZUL — stays upright while the moon turns beneath it */
   .hero .moon .engrave{
     position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
