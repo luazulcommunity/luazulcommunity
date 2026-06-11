@@ -39,9 +39,11 @@ mantendo o visual atual integrado ao cenário (aura, feather, opacidade, engrave
 
 ## Fallback e segurança (histórico de crash mobile)
 
-- **Mobile (modo leve atual): nada muda.** Continua o `moon.png` estático.
-  O 3D só carrega em ambientes desktop (ex.: `pointer: fine` + viewport larga,
-  fora do modo leve).
+- **Mobile (atualizado em 2026-06-11):** o 3D roda também no celular, a pedido
+  do usuário. O risco histórico de crash era de compositing (blur/drop-shadow,
+  que o modo leve segue cortando), não de WebGL; todos os fallbacks abaixo
+  cobrem o mobile. Touch: o canvas usa `touch-action:pan-y` — swipe vertical
+  rola a página normalmente sobre a lua; arrasto horizontal gira a esfera.
 - **Swap seguro:** o `<img>` atual só é ocultado depois do primeiro frame 3D
   renderizado com sucesso. Se WebGL falhar, a lib não carregar ou a textura
   falhar, o `<img>` permanece como está hoje.
@@ -57,5 +59,4 @@ mantendo o visual atual integrado ao cenário (aura, feather, opacidade, engrave
 ## Fora de escopo
 
 - 3D na lua da seção Cycle Wide (`.orbit-moon`) — permanece como está.
-- 3D no mobile.
 - Qualquer mudança no restante do hero (textos, CTAs, animações de entrada).
