@@ -837,7 +837,7 @@
   .hero .moon canvas.moon3d{
     position:absolute;inset:0;width:100%;height:100%;z-index:1;
     display:none;pointer-events:auto;cursor:grab;touch-action:none;
-    opacity:.72;
+    opacity:.72;clip-path:circle(50%);
     -webkit-mask-image:radial-gradient(circle closest-side, #000 72%, rgba(0,0,0,.5) 88%, transparent 99%);
     mask-image:radial-gradient(circle closest-side, #000 72%, rgba(0,0,0,.5) 88%, transparent 99%);
   }
@@ -2001,7 +2001,7 @@
   const tex = await new Promise(res => {
     new THREE.TextureLoader().load('assets/moon-texture.jpg', t => res(t), undefined, () => res(null));
   });
-  if (!tex) return;
+  if (!tex) { renderer.dispose(); return; }
   tex.colorSpace = THREE.SRGBColorSpace;
 
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
@@ -2025,12 +2025,20 @@
   // ----- rotacao: drag com inercia + scroll + auto-rotacao -----
   const AUTO = (2 * Math.PI) / 150; // mesma velocidade da animacao CSS antiga (150s/volta)
   const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let dead = false;
+  canvas.addEventListener('webglcontextlost', e => {
+    e.preventDefault();
+    dead = true;
+    holder.classList.remove('moon3d-on'); // imagem volta no lugar do canvas
+  });
+
   let velX = 0, velY = REDUCED ? 0 : AUTO;
   let dragging = false, lastT = 0, lastInteract = -1e9;
 
-  let px = 0, py = 0;
+  let px = 0, py = 0, lastMoveT = 0;
   canvas.addEventListener('pointerdown', e => {
-    dragging = true; px = e.clientX; py = e.clientY;
+    if (e.button !== 0) return;
+    dragging = true; px = e.clientX; py = e.clientY; lastMoveT = performance.now();
     canvas.setPointerCapture(e.pointerId);
     canvas.style.cursor = 'grabbing';
   });
@@ -2041,10 +2049,16 @@
     px = e.clientX; py = e.clientY;
     moon.rotation.y += dx;
     moon.rotation.x = Math.max(-0.7, Math.min(0.7, moon.rotation.x + dy));
-    velY = dx * 60; velX = dy * 60; // vira inercia ao soltar
+    const nowT = performance.now();
+    const dtm = Math.max((nowT - lastMoveT) / 1000, 1 / 240);
+    lastMoveT = nowT;
+    velY = dx / dtm; velX = dy / dtm;
     lastInteract = performance.now();
   });
-  const release = () => { dragging = false; canvas.style.cursor = 'grab'; lastInteract = performance.now(); };
+  const release = () => {
+    dragging = false; canvas.style.cursor = 'grab'; lastInteract = performance.now();
+    if (REDUCED) { velX = 0; velY = 0; }
+  };
   canvas.addEventListener('pointerup', release);
   canvas.addEventListener('pointercancel', release);
 
@@ -2066,11 +2080,12 @@
 
   // pausa o render quando o hero sai da tela
   let visible = true;
-  new IntersectionObserver(en => { visible = en[0].isIntersecting; }).observe(holder);
+  new IntersectionObserver(en => { visible = en[en.length - 1].isIntersecting; }).observe(holder);
 
   holder.appendChild(canvas);
 
   function frame(now){
+    if (dead) return; // contexto perdido -> para o loop e a imagem ja voltou
     requestAnimationFrame(frame);
     if (!visible) { lastT = now; return; }
     const dt = Math.min((now - lastT) / 1000 || 0, 0.05);
@@ -2086,7 +2101,8 @@
         velY *= 0.94;                   // inercia decaindo
       }
     }
-    renderer.render(scene, cam);
+    try { renderer.render(scene, cam); }
+    catch (e) { dead = true; holder.classList.remove('moon3d-on'); return; }
     // primeiro frame renderizado com sucesso -> troca a imagem pelo 3D
     if (!holder.classList.contains('moon3d-on')) holder.classList.add('moon3d-on');
   }
